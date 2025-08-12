@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow a Girlfriend - Official Website</title>
+    <link rel="icon" type="image/x-icon" href="site_favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
+
+        @font-face {
+            font-family: 'Vanilla Extract';
+            src: url('VanillaExtractRegular.ttf') format('truetype');
+        }
+
+        :root {
+            --light-bg: #FFF9FB;
+            --pastel-pink: #FFDFF9;
+            --pastel-blue: #BBE8EA;
+            --border-pink: #EABBE3;
+            --accent-pink: #ED73AE;
+            --dark-blue: #434655;
+            --white: #FFFFFF;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            background-image: url('background_both_sides_loopable.png');
+            background-repeat: repeat-y;
+            background-position: center top;
+            background-size: 100% auto;
+            color: var(--dark-blue);
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            margin: 0;
+            padding-top: 70px;
+        }
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        a, button, .btn, .char-btn, #mobile-menu-trigger, input[type="submit"] {
+            cursor: pointer;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Vanilla Extract', cursive;
+            color: var(--accent-pink);
+            font-weight: normal;
+        }
+        .nav-logo-image {
+            height: 50px; 
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0px 20px 50px;
+        }
+
+        .content-box {
+            background-color: var(--white);
+            border: 3px solid var(--dark-blue);
+            border-radius: 1.5rem;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 10px 10px 0 var(--border-pink);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .content-box:hover {
+            transform: translate(-5px, -5px);
+            box-shadow: 15px 15px 0 var(--pastel-blue);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            color: var(--white);
+            background-color: var(--accent-pink);
+            border-radius: 30px;
+            border: 2px solid var(--accent-pink);
+            box-shadow: 0 4px 10px rgba(237, 115, 174, 0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #d46399;
+            box-shadow: 0 6px 15px rgba(237, 115, 174, 0.4);
+        }
+
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-bottom: 2px solid var(--border-pink);
+            z-index: 1000;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+        .nav-logo-text {
+            font-family: 'Vanilla Extract', cursive;
+            font-size: 24px;
+            color: var(--accent-pink);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 5px;
+        }
+        .nav-links a {
+            color: var(--dark-blue);
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-radius: 20px;
+        }
+        .nav-links a:not(.btn-nav-highlight):hover {
+            color: var(--accent-pink);
+            background-color: var(--pastel-pink);
+        }
+        .btn-nav-highlight {
+            background-color: var(--accent-pink);
+            color: var(--white) !important;
+            padding: 10px 20px;
+        }
+        .btn-nav-highlight:hover {
+            background-color: #d46399;
+        }
+        
+        #mobile-menu-trigger {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-pink);
+            color: var(--white);
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            z-index: 1001;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        #mobile-menu-trigger:hover { transform: scale(1.1); }
+
+        @media (max-width: 992px) {
+            .main-nav .nav-links {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--light-bg);
+                justify-content: center;
+                align-items: center;
+            }
+            .main-nav .nav-links.active { display: flex; }
+            .nav-links li {
+                margin: 15px 0;
+            }
+            .nav-links a { font-size: 24px; }
+            #mobile-menu-trigger {
+                display: flex;
+            }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .hero-logo img {
+            max-width: 100%;
+            width: 450px;
+            margin-bottom: 15px;
+        }
+        .hero-header-image img {
+            max-width: 100%;
+            width: 850px;
+            margin-bottom: 5px;
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .content-warning {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            background-color: #eabbe315;
+            border: 2px solid var(--accent-pink);
+            border-style: dashed;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--dark-blue);
+        }
+        .content-warning i {
+            margin-right: 10px;
+            color: var(--accent-pink);
+        }
+        
+        .fanclub-subscribe {
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        #about .about-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        #about .about-screenshot img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        
+        .char-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .char-btn {
+            background: var(--white);
+            border: 2px solid var(--border-pink);
+            color: var(--dark-blue);
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .char-btn.active, .char-btn:hover {
+            background-color: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: var(--white);
+        }
+        .char-display { display: none; }
+        .char-display.active {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        .char-display .char-sprite img {
+            max-width: 250px;
+        }
+        .char-screenshots {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .char-screenshots img {
+            width: 100%;
+            border-radius: 10px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+        .char-screenshots img:hover {
+            transform: scale(1.03);
+        }
+        
+        #features ul {
+            list-style: none;
+            padding: 0;
+            column-count: 2;
+        }
+        #features li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        #features li::before {
+            content: '🍄';
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+        }
+
+        .contact-form .form-group { margin-bottom: 20px; }
+        .contact-form label { display: block; margin-bottom: 10px; font-weight: bold; }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--light-bg);
+            border: 2px solid var(--border-pink);
+            border-radius: 10px;
+            color: var(--dark-blue);
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+        #about.content-box {
+            max-width: 840px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        footer {
+            text-align: center;
+        }
+        .footer-top {
+            background-color: #d06fbc;
+            padding: 30px 20px;
+        }
+        .footer-bottom {
+            background-color: #f38cc3;
+            padding: 40px 20px;
+            color: #821f8b;
+        }
+        .footer-platforms {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .press-kit {
+            margin-bottom: 30px;
+        }
+        .press-kit .btn {
+            background-color: #821f8b;
+            border-color: #821f8b;
+        }
+         .press-kit .btn:hover {
+            background-color: #6a1971;
+            border-color: #6a1971;
+        }
+        .footer-socials {
+            margin-bottom: 30px;
+        }
+        .footer-socials a {
+            color: #821f8b;
+            font-size: 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid #821f8b;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer-socials a:hover {
+            color: #f38cc3;
+            background-color: #821f8b;
+        }
+        .copyright {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .platform-btn {
+            display: inline-block;
+            position: relative;
+            line-height: 0;
+            transition: transform 0.3s ease;
+        }
+        .platform-btn:hover {
+            transform: scale(1.05);
+        }
+        .platform-btn img {
+            transition: opacity 0.3s ease;
+        }
+        .hero-buttons .platform-btn img {
+            height: 60px;
+        }
+        .footer-platforms .platform-btn img {
+            height: 50px;
+        }
+        .platform-btn .btn-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+        .platform-btn:hover .btn-idle {
+            opacity: 0;
+        }
+        .platform-btn:hover .btn-hover {
+            opacity: 1;
+        }
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+        .image-modal.active {
+            display: flex;
+        }
+        .image-modal .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80vh;
+        }
+        .image-modal .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .image-modal .modal-close:hover,
+        .image-modal .modal-close:focus {
+            color: var(--border-pink);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 992px) {
+            .char-display.active { flex-direction: column; align-items: center; text-align: center;}
+        }
+
+        @media (max-width: 768px) {
+            #about .about-content { flex-direction: column; }
+            .char-screenshots { grid-template-columns: 1fr; }
+            #features ul { column-count: 1; }
+            
+        }
+
+        #fanclub .form_builder_form {
+            background: transparent !important;
+            padding: 0px 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        #fanclub .form-group {
+            margin-bottom: 0px !important;
+            padding: 0 !important;
+        }
+        #fanclub .form-group label {
+            display: none !important;
+        }
+        #fanclub .form-control {
+            width: 100% !important;
+            max-width: 300px !important;
+            padding: 15px !important;
+            border-radius: 30px !important;
+            border: 2px solid var(--border-pink) !important;
+            font-size: 16px !important;
+            font-family: 'Nunito Sans', sans-serif !important;
+            height: auto !important;
+            box-sizing: border-box;
+            background-color: var(--white) !important;
+            color: var(--dark-blue) !important;
+        }
+        #fanclub .form-control:focus {
+            outline: none;
+            border-color: var(--accent-pink) !important;
+        }
+        #fanclub button.btn {
+            padding: 10px 25px !important;
+            font-family: 'Nunito Sans', sans-serif !important;
+            font-weight: bold !important;
+            font-size: 16px !important;
+            color: var(--white) !important;
+            background-color: var(--accent-pink) !important;
+            border-radius: 30px !important;
+            border: 2px solid var(--accent-pink) !important;
+            transition: all 0.3s ease !important;
+            line-height: normal !important;
+            margin-top: 10px !important;
+        }
+        #fanclub button.btn:hover {
+            transform: scale(1.05) !important;
+            background-color: #d46399 !important;
+        }
+        #fanclub .error-message {
+            color: var(--accent-pink) !important;
+            font-weight: bold !important;
+        }
+
+        #fanclub {
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #contact-iframe {
+            width: 100%;
+            max-width: 1000px;
+            height: 800px;
+            border: none;
+            display: block;
+            margin: 0 auto;
+        }
+        .copyright {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .copyright a {
+            color: inherit; 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: color 0.3s ease;
+        }
+
+        .copyright a:hover {
+            color: var(--white); 
+        }
+
+        @media (max-width: 768px) {
+            #contact.content-box {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            #contact-iframe {
+                height: 950px;
+            }
+        }
+    
+
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=Enter Here your ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'Enter Here your ID');
+    </script>
+
+</head>
+<body>
+
+    <header class="main-nav">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="nav-logo-text">Grow a Girlfriend</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#fanclub">Fanclub</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#characters">Characters</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="https://store.steampowered.com/app/2766830/Grow_a_Girlfriend/" class="btn-nav-highlight">Download</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    <div id="mobile-menu-trigger">☰</div>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-logo">
+                <img src="Logo.png" alt="Grow a Girlfriend Main Logo">
+            </div>
+            <div class="hero-header-image">
+                <img src="header.png" alt="Three mushroom girl characters">
+            </div>
+        </section>
+
+        <div class="container">
+            <section id="fanclub" class="content-box">
+                <div class="fanclub-subscribe">
+                    <h2 class="section-title">Join the Fanclub!</h2>
+                    <p>and get a free art book!</p>
+                    <script id="form-script-tag-19830589" src="https://true-blue-eyes.systeme.io/public/remote/page/320474287e733a2235242507928089ee747658a2.js"></script>
+                </div>
+            </section>
+
+            <section id="about" class="content-box">
+                <h2 class="section-title">About the Game</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Welcome to MeetnEat™</h3>
+                        <p>Our fungal experts have finally created mushrooms girls! Eat them, love them, hurt yourself with them - It's all up to you, dear consumer!</p>
+                        <p>With a lifespan of only 3 days, they'll conveniently dry up and die before the nagging wears you down.</p>
+                        <div class="content-warning">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Warning: This game is not suitable for children or those who are easily disturbed!
+                    </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="characters" class="content-box">
+                <h2 class="section-title">Mushroom Girls in Stock</h2>
+                <div class="char-selector">
+                    <button class="char-btn active" data-char="button">Button</button>
+                    <button class="char-btn" data-char="alice">Alice</button>
+                    <button class="char-btn" data-char="sai">Sai</button>
+                </div>
+                <div id="char-button" class="char-display active">
+                    <div class="char-sprite"><img src="Button.png" alt="Button Sprite"></div>
+                    <div class="char-details">
+                        <h3>Button</h3>
+                        <p>An upbeat and playful mushroom who is perfectly fine with you eating her!</p>
+                        <div class="char-screenshots">
+                            <img src="button_1.png" alt="Screenshot 1 with Button">
+                            <img src="button_2.png" alt="Screenshot 2 with Button">
+                            <img src="button_3.png" alt="Screenshot 3 with Button">
+                            <img src="button_4.png" alt="Screenshot 4 with Button">
+                        </div>
+                    </div>
+                </div>
+                <div id="char-alice" class="char-display">
+                    <div class="char-sprite"><img src="Alice.png" alt="Alice Sprite"></div>
+                    <div class="char-details">
+                        <h3>Alice</h3>
+                        <p>Our toxic mushroom designed to prioritise your satisfaction, no matter what.</p>
+                        <div class="char-screenshots">
+                            <img src="alice_1.png" alt="Screenshot 1 with Alice">
+                            <img src="alice_2.png" alt="Screenshot 2 with Alice">
+                            <img src="alice_3.png" alt="Screenshot 3 with Alice">
+                            <img src="alice_4.png" alt="Screenshot 4 with Alice">
+                        </div>
+                    </div>
+                </div>
+                <div id="char-sai" class="char-display">
+                    <div class="char-sprite"><img src="Sai.png" alt="Sai Sprite"></div>
+                    <div class="char-details">
+                        <h3>Sai</h3>
+                        <p>A psychedelic mushroom who we added PURELY FOR RESEARCH PURPOSES.</p>
+                        <div class="char-screenshots">
+                            <img src="sai_1.png" alt="Screenshot 1 with Sai">
+                            <img src="sai_2.png" alt="Screenshot 2 with Sai">
+                            <img src="sai_3.png" alt="Screenshot 3 with Sai">
+                            <img src="sai_4.png" alt="Screenshot 4 with Sai">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="features" class="content-box">
+                <h2 class="section-title">Features</h2>
+                <ul>
+                    <li>Go on dates and fall in love with mushroom girls.</li>
+                    <li>Cook them into delicious dishes, like omelettes and smores.</li>
+                    <li>Hand holding, kissing, snuggling, and literally sleeping with them.</li>
+                    <li>Heal or deteriorate your own mental health.</li>
+                    <li>Spray them every day so they stay nice and moist!</li>
+                    <li>Camping, friend-zoning, imprisonment, emotional manipulation, and much more!</li>
+                </ul>
+            </section>
+
+            <section id="contact" class="content-box">
+                <h2 class="section-title">Message Us</h2>
+                <iframe id="contact-iframe" src="https://true-blue-eyes.systeme.io/55f818cd"></iframe>
+            </section>
+        </div>
+    </main>
+
+
+    <footer>
+        <div class="footer-top">
+             <div class="footer-platforms">
+                <a href="https://trubluis.itch.io/grow-a-girlfriend" class="platform-btn">
+                    <img class="btn-idle" src="itchio_button_idle.png" alt="Play on itch.io">
+                    <img class="btn-hover" src="itchio_button_hover.png" alt="Play on itch.io">
+                </a>
+                <a href="https://store.steampowered.com/app/2766830/Grow_a_Girlfriend/" class="platform-btn">
+                    <img class="btn-idle" src="steam_button_idle.png" alt="Download on Steam">
+                    <img class="btn-hover" src="steam_button_hover.png" alt="Download on Steam">
+                </a>
+             </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="press-kit">
+                <a href="https://impress.games/press-kit/true-blue-basin/grow-a-girlfriend" class="btn" download>Get the Press Kit</a>
+            </div>
+            <div class="footer-socials">
+                <a href="https://x.com/trubluIs" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.youtube.com/@trubluIs" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.patreon.com/trubluIs" title="Patreon"><i class="fa-brands fa-patreon"></i></a>
+                <a href="https://www.twitch.tv/trubluis" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+            </div>
+
+        <div class="copyright">
+            <p>Designed with ♡ by <a href="https://en.yorubox.eu/">Yorubox</a></p>
+        </div>
+
+        </div>
+    </footer>
+
+    <div id="image-modal" class="image-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modal-image">
+    </div>
+    
+    <script>
+        const mobileMenuTrigger = document.querySelector('#mobile-menu-trigger');
+        const navLinks = document.querySelector('.main-nav .nav-links');
+        const links = document.querySelectorAll('.main-nav .nav-links a');
+
+        mobileMenuTrigger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuTrigger.innerHTML = navLinks.classList.contains('active') ? '×' : '☰';
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuTrigger.innerHTML = '☰';
+                }
+            });
+        });
+
+        const charButtons = document.querySelectorAll('.char-btn');
+        const charDisplays = document.querySelectorAll('.char-display');
+
+        charButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetChar = button.dataset.char;
+                charButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                charDisplays.forEach(display => {
+                    display.classList.toggle('active', display.id === `char-${targetChar}`);
+                });
+            });
+        });
+
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+        const closeBtn = document.querySelector('.modal-close');
+        const screenshots = document.querySelectorAll('.char-screenshots img');
+
+        screenshots.forEach(img => {
+            img.addEventListener('click', function() {
+                modal.classList.add('active');
+                modalImg.src = this.src;
+                document.body.classList.add('modal-open');
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
